@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 export function PrivyContextProvider({ children }: { children: ReactNode }) {
   return (
     <PrivyProvider
-      appId="clv1galje0d5jvg84qal84z92"
+      appId={process.env.NEXT_PUBLIC_PRIVY_APP_ID!}
       config={{
         appearance: {
           theme: "dark",
