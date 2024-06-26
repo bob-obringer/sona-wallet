@@ -6,44 +6,41 @@ import { usePrivy } from "@privy-io/react-auth";
 export default function Home() {
   const { ready, login, authenticated, exportWallet, logout } = usePrivy();
   const isLoggingInRef = useRef(false);
-  const isExportingRef = useRef(false);
 
   useEffect(() => {
-    window.onunhandledrejection = (error) => {
-      document.cookie.split(";").forEach(function (cookie) {
-        document.cookie =
-          cookie.split("=")[0] +
-          "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
-      });
-      localStorage.clear();
-      sessionStorage.clear();
-      setTimeout(() => {
-        window.location.reload();
-      });
-    };
-    return () => {
-      window.onunhandledrejection = null;
-    };
-  }, [exportWallet, login]);
-
-  useEffect(() => {
-    if (!ready) return;
-
-    if (authenticated) {
-      if (isExportingRef.current) return;
-      isExportingRef.current = true;
-      setTimeout(() => {
-        void exportWallet();
-      }, 2000);
-      return;
-    }
-
-    if (!isLoggingInRef.current) {
-      isLoggingInRef.current = true;
-      login();
-      return;
-    }
+    if (!ready || !isLoggingInRef) return;
+    isLoggingInRef.current = true;
+    login();
   }, [authenticated, ready, login, exportWallet, logout]);
 
-  return null;
+  if (!ready) return null;
+
+  return (
+    <div className="h-svh w-full flex flex-col items-center justify-center gap-2">
+      {!authenticated && (
+        <button
+          onClick={authenticated ? exportWallet : login}
+          className="p-2 px-4 text-black bg-[#DAFE58]"
+        >
+          {authenticated ? "Export Wallet" : "Login"}
+        </button>
+      )}
+      {authenticated && (
+        <>
+          <button
+            onClick={exportWallet}
+            className="w-40 p-2 px-4 text-black bg-[#DAFE58]"
+          >
+            Export Wallet
+          </button>
+          <button
+            onClick={logout}
+            className="w-40 p-2 px-4 text-gray-300 border border-gray-300"
+          >
+            Logout
+          </button>
+        </>
+      )}
+    </div>
+  );
 }
