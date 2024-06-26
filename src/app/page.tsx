@@ -8,7 +8,7 @@ export default function Home() {
   const isLoggingInRef = useRef(false);
 
   useEffect(() => {
-    if (!ready || !isLoggingInRef) return;
+    if (!ready || !isLoggingInRef || authenticated) return;
     isLoggingInRef.current = true;
     login();
   }, [authenticated, ready, login, exportWallet, logout]);
