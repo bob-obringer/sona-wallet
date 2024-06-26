@@ -8,23 +8,23 @@ export default function Home() {
   const isLoggingInRef = useRef(false);
   const isExportingRef = useRef(false);
 
-  useEffect(() => {
-    window.onunhandledrejection = (error) => {
-      document.cookie.split(";").forEach(function (cookie) {
-        document.cookie =
-          cookie.split("=")[0] +
-          "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
-      });
-      localStorage.clear();
-      sessionStorage.clear();
-      setTimeout(() => {
-        window.location.reload();
-      });
-    };
-    return () => {
-      window.onunhandledrejection = null;
-    };
-  }, [exportWallet, login]);
+  // useEffect(() => {
+  //   window.onunhandledrejection = (error) => {
+  //     document.cookie.split(";").forEach(function (cookie) {
+  //       document.cookie =
+  //         cookie.split("=")[0] +
+  //         "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+  //     });
+  //     localStorage.clear();
+  //     sessionStorage.clear();
+  //     setTimeout(() => {
+  //       window.location.reload();
+  //     });
+  //   };
+  //   return () => {
+  //     window.onunhandledrejection = null;
+  //   };
+  // }, [exportWallet, login]);
 
   useEffect(() => {
     if (!ready) return;
