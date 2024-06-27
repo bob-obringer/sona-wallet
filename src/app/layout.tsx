@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import {PrivyContextProvider} from "@/app/privy-context";
+import { PrivyProvider } from "@privy-io/react-auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +18,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <PrivyContextProvider>
-        {children}  
-      </PrivyContextProvider>
+        <PrivyProvider
+          appId={process.env.NEXT_PUBLIC_PRIVY_APP_ID!}
+          config={{
+            appearance: { theme: "dark" },
+          }}
+        >
+          {children}
+        </PrivyProvider>
       </body>
     </html>
   );

@@ -1,12 +1,13 @@
 "use client";
 
-import { ReactNode, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { usePrivy } from "@privy-io/react-auth";
 
 export default function Home() {
   const { ready, login, authenticated, exportWallet, logout } = usePrivy();
   const isLoggingInRef = useRef(false);
 
+  // show login dialog when we're ready
   useEffect(() => {
     if (!ready || !isLoggingInRef || authenticated) return;
     isLoggingInRef.current = true;
@@ -15,6 +16,7 @@ export default function Home() {
 
   if (!ready) return null;
 
+  // show the ui once we're ready
   return (
     <div className="h-svh w-full flex flex-col items-center justify-center gap-2">
       {!authenticated && (
